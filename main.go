@@ -1,10 +1,11 @@
-	package main
+package main
 
-	import (
-		"first-golang-demo/helper"
-		"fmt"
-		"sync"
-	)
+import (
+	"first-golang-demo/helper"
+	"fmt"
+	"os"
+	"sync"
+)
 
 	//Global or package level variable
 	const conferenceTickets = 50 //constant
@@ -40,9 +41,20 @@
 		brand string
 	}
 
+	// pointer with struct
+
+	type Foo struct{
+		name string	
+	}
+
+	type Rectangle struct{
+		width, height int
+	}
+
 	// Creating wait group for synchronization
 	var wg = sync.WaitGroup{}
 
+	//========================================== MAIN FUNCTION =============================================
 	func main() {
 
 		fmt.Println("########## Welcome to our", helper.ConferenceName, "booking application ##########")
@@ -127,9 +139,7 @@
 			{0,0,1},
 		}
 		fmt.Printf("multi dimensional  array %v \n", identityMatrix)
-
-		
-       
+         
 		//================== SLICES ===========================
 		/*
 		It support adding element at the end of the slide .ie appending
@@ -214,70 +224,130 @@
 
 
 
-		// // ================== Loop and If-else ============================
+		// ================== Loop and If-else ============================
 		
-		// var times = 5;
-		// for{
-		// 	if times == 0 {
-		// 		break
-		// 	}
-		// 	fmt.Printf("Inside for loop %v times \n", times)
-		// 	times --	 
-		// }
+		var times = 5;
+		for{
+			if times == 0 {
+				break
+			}
+			fmt.Printf("Inside for loop %v times \n", times)
+			times --	 
+		}
 
-		// cars :=[]string{"TATA", "Ford", "Tesla", "Mahindra"}
+		cars :=[]string{"TATA", "Ford", "Tesla", "Mahindra"}
 
-		// for index, car := range cars {
-		// 	fmt.Printf("car details at car[%v] %v \n", index, car)
-		// }
-		// // Use Blank identifire i.e. _ to ignore the variable we don't want to use
+		for index, car := range cars {
+			fmt.Printf("car details at car[%v] %v \n", index, car)
+		}
+		// Use Blank identifire i.e. _ to ignore the variable we don't want to use
 
-		// for _, car := range cars {
-		// 	fmt.Printf("car details %v \n", car)
-		// }
-		// count :=4
-		// for i := 0; i < count; i++ {
-		// 	fmt.Printf("Counter in for loop --%v\n",i)
-		// }
+		for _, car := range cars {
+			fmt.Printf("car details %v \n", car)
+		}
+		count :=4
+		for i := 0; i < count; i++ {
+			fmt.Printf("Counter in for loop --%v\n",i)
+		}
 
+		for i,j := 0, 0; i <5; i, j =i+1, j+1{
+			fmt.Println(i,j)
+		}
+		//OR
+		i,j := 0, 0;
+		for i<5 {
+			fmt.Println(i,j)
+			i, j = i+1, j+1
+		}
 
-		// 	//================== Asking for user input and User input validation ================== 
-		// 	var pincode string
-		// 	fmt.Println("Please enter your pincode")
-		// 	fmt.Scan(&pincode)
+		myMaps := make(map[string]string,0)
+		myMaps["name"] ="Rajib"
+		myMaps["age"] = "11"
 
-		// 	if(len(pincode) < 4 || len(pincode) >=5){
-		// 	fmt.Printf("Bad input\n")
-		// 	}else{
-		// 		fmt.Printf("User pincode is %v \n", pincode)
-		// 	}
+		if _, ok := myMaps["email"]; ok{
+             fmt.Println("Name exits in the map")
+		}else{
+			fmt.Println("Name does not exits in the map")
+		}
 
-		// 	//================== Switch statement ==================
-		// 	var carBrand string
-		// 	fmt.Printf("Enter car rand to get available car\n")
-		// 	fmt.Scan(&carBrand)
+		//OR
+		
+		_, ok := myMaps["email"]
+		if ok {
+			fmt.Println("Name exits in the map")
+		}else{
+				fmt.Println("Name does not exits in the map")
+		}
+        // Iterate over map
+		for k,v := range myMaps{
+			fmt.Println(k,v)
+		}
+		// Iterate over slice
+		sliceIt := make([]int,0)
+		sliceIt = append(sliceIt, 10)
+		sliceIt = append(sliceIt, 20)
 
-		// 	switch carBrand {
-		// 	case "TATA":
-		// 			fmt.Printf("TATA car available\n")
-		// 	case "FORD":
-		// 		fmt.Printf("FORD car available\n")
-		// 	case "MAHINDRA", "TESLA":
-		// 		fmt.Printf("MAHINDRA or TESLA car available\n")
-		// 	default:
-		// 			fmt.Print("No car present\n")
-		// 	}
+		for k,v := range sliceIt{
+			fmt.Println(k,v)
+		}
+		// Iterate over array
+		arrayIt := [6]int{1,2,3,4,5}
+		for k,v := range arrayIt{
+			fmt.Println(k,v)
+		}
 
-		// 	//================== Caling functions ==================
-		// 	greetuser()
-		// 	greetuserByName("Rajib")
+		//================== Asking for user input and User input validation ================== 
+		var pincode string
+		fmt.Println("Please enter your pincode")
+		fmt.Scan(&pincode)
 
-		// 	returnValue :=funcWithReturn()
-		// 	fmt.Printf("Return value from function is..........%v\n", returnValue)
-			
-		// 	returnValue1, returnValue2 := funcWithMultipleReturn()
-		// 	fmt.Printf("First return value from function is..........%v\n", returnValue1)
-		// 	fmt.Printf("Second return value from function is..........%v\n", returnValue2)
+		if(len(pincode) < 4 || len(pincode) >=5){
+		fmt.Printf("Bad input\n")
+		}else{
+			fmt.Printf("User pincode is %v \n", pincode)
+		}
+
+		//================== Switch statement ==================
+		var carBrand string
+		fmt.Printf("Enter car rand to get available car\n")
+		fmt.Scan(&carBrand)
+
+		switch carBrand {
+		case "TATA":
+				fmt.Printf("TATA car available\n")
+		case "FORD":
+			fmt.Printf("FORD car available\n")
+		case "MAHINDRA", "TESLA":
+			fmt.Printf("MAHINDRA or TESLA car available\n")
+		default:
+				fmt.Print("No car present\n")
+		}
+
+		// switch with Interface
+
+		var op interface{} = 8
+		switch op.(type) {
+		case int:
+			fmt.Println("Int type")
+		case string:
+			fmt.Println("String type")
+		default:
+			fmt.Println("No choice found")
+		}
+		// switch with fallthrough
+		//fallthrough will execute the next statement also
+
+		switch 1 {
+		case 1:
+			fmt.Println("1")
+			fallthrough
+		case 2:
+			fmt.Println("2")
+		case 3:
+			fmt.Println("3")	
+		default:
+			fmt.Println("No choice found")
+		}
 		
 		//================== MAP ================================= 
 		/*
@@ -321,8 +391,8 @@
 		// will return 0 even if key absent so to avoid this use ,ok
         fmt.Printf("When key absent%v\n",commaOkMapTest["nuts"]) 
 
-		_, ok := commaOkMapTest["nuts"]
-        fmt.Printf("When key absent with comma ok -->%v\n", ok) 
+		_, oks := commaOkMapTest["nuts"]
+        fmt.Printf("When key absent with comma ok -->%v\n", oks) 
 
 		// Map copy
 		/*
@@ -436,29 +506,140 @@
 		}
 		fmt.Printf("Content of computerStructOne %v \n", computerStructOne)
 
+		//====================== Defer, Panic and Recover =========================================
+		/*
+		 defer - means we are defering from execution of a statement at that moment.
+		 But the statement will get executed just before returning the value
+		 defer act in LIFO order
+		*/
+		// op will be 1 3 2
+		fmt.Println(1)   
+		defer fmt.Println(2)   
+		fmt.Println(3) 
+		// op will be 3 2 1
+		defer fmt.Println(1)   
+		defer fmt.Println(2)   
+		defer fmt.Println(3) 
+		// panic will throw the error if any
+		myFile := createFile("myFile.txt")
+		fmt.Printf("Type of file %T", myFile)
 
-	// 	//================== Go concurency ================== 
+		//================== Pointers ======================
 
-	// 	//calling function from other file of same package
-	// 	greetuserFromOutside()
+		var obx int = 1
+		var obx_ptr *int = &obx
+		fmt.Printf("Value of obx %v\n", obx)
+		fmt.Printf("Memory location of obx_ptr %v\n", obx_ptr)
+		fmt.Printf("Value of obx_ptr %v\n", *obx_ptr)
+		//OR
+		var obj = 1
+		var obj_ptr = &obj
+		fmt.Printf("Value of obj %v\n", obj)
+		fmt.Printf("Memory location of obj_ptr %v\n", obj_ptr)
+		fmt.Printf("Value of obj_ptr %v\n", *obj_ptr)
+		// pointer with struct
+		// foo_obj := Foo{}
+		// foo_obj.name ="Hello Pointer"
+		// fmt.Println(foo_obj) //{Hello Pointer}
 
-	// 	//calling function from other file of different package
-	// 	/*
-	// 	if go mentioned then main thread exit before this thread is complete , 
-	// 	so we need to make main thread to wait untill all threads are done by
-	// 	using waitgroup of sync package
-	// 	*/
-	// 	wg.Add(2) 
-	// 	//We just need to make sure we are passing around a pointer of waitgroup so we do not get copies
-	// 	go helper.GreetuserFromOutside(&wg)  
-	// 	go greetuserFromOutsideWithSleep(&wg)
+		var foo_ptr *Foo
+		fmt.Println(foo_ptr) // print default value nil
+		foo_ptr = new(Foo)
+		fmt.Println(&foo_ptr) //0xc00000e040
+		fmt.Println(*&(foo_ptr).name) // empty
+		foo_ptr.name ="Hi"
+		fmt.Println(foo_ptr.name) // Hi
 
-	// 	//wait for wg.Done()
-	// 	wg.Wait()
+		//================== Go Function ===================================
+
+		// By default go function parameter are pass by value
+		msg := "Hi"
+		writeMessage(msg)  // Hi
+		fmt.Println(msg) // Hi
+
+		writeMessage2(msg)  // Hello
+		fmt.Println(msg) // Hi
+		// Pass parameter by reference
+		fmt.Printf("Before value change to the reference: %v\n",msg)
+		writeMessageByReference(&msg)
+		fmt.Printf("After value change to the reference: %v\n",msg)
+
+		// Multi param function or variadic function
+		multiParam(1,2,3)
+		multiParam(2,3)
+        // Function with error return
+		value, err :=funcWithReturnWIthError()
+		if(err != nil){
+            fmt.Printf("Error msg is :%v\n",err)
+		}
+		fmt.Print(value)
+
+		//Anonymous function declaration and invocation
+		func(){
+			fmt.Println("Inside anonymous function")
+		}() // calling function by ()
+		
+		//Anonymous function declaration and assignment
+		annoFunc := func(){
+			fmt.Println("Inside anonymous function")
+		}
+		annoFunc()
+
+		//Function with struct
+	
+		rect := Rectangle{
+			width: 2,
+			height: 3,
+		}
+	    ara := rect.area()
+		fmt.Printf("Area of Rectangle is :%v\n", ara)
+		//================== Caling functions ==================
+		greetuser()
+		greetuserByName("Rajib")
+
+		returnValue :=funcWithReturn()
+		fmt.Printf("Return value from function is..........%v\n", returnValue)
+		
+		returnValue1, returnValue2 := funcWithMultipleReturn()
+		fmt.Printf("First return value from function is..........%v\n", returnValue1)
+		fmt.Printf("Second return value from function is..........%v\n", returnValue2)
+	
+		// Interface and strut Use
+		var circleCalc geometry = Circle{
+			radius: 3,
+		}
+		fmt.Println(circleCalc.area())
+		fmt.Println(circleCalc.perimeter())
+		// OR
+		circleCalc2 := Circle{
+			radius: 3,
+		}
+		fmt.Println(circleCalc2.area())
+		fmt.Println(circleCalc2.perimeter())
+
+
+		//================== Go concurency ========================== 
+
+		//calling function from other file of same package
+		greetuserFromOutside()
+
+		//calling function from other file of different package
+		/*
+		if go mentioned then main thread exit before this thread is complete , 
+		so we need to make main thread to wait untill all threads are done by
+		using waitgroup of sync package
+		*/
+		wg.Add(2) 
+		//We just need to make sure we are passing around a pointer of waitgroup so we do not get copies
+		go helper.GreetuserFromOutside(&wg)  
+		go greetuserFromOutsideWithSleep(&wg)
+
+		//wait for wg.Done()
+		wg.Wait()
 
 	}
 
-	// ================== function ================================  
+	// ================== function Declaration================================  
 	func greetuser(){
 		fmt.Print("Hello..........\n")
 	}
@@ -474,5 +655,70 @@
 	func funcWithMultipleReturn() (string, string){
 		return "Returning from function", "Hello"
 	}
+	// function with return value and error
 
+	func funcWithReturnWIthError() (string, error){
+		if(true){
+			return "Returning from function", fmt.Errorf("Some error occurred")
+		}else{
+			return "Returning from function", nil
+		}
+	}
+	// function create file
+	func createFile(path string) *os.File{
 
+		fmt.Println("Creating file ")
+		file , err := os.Create(path)
+		if err != nil {
+			panic(err)
+		}
+		return file
+	}
+	// pass by value or passing copy 
+     func writeMessage(msg string){
+		fmt.Println(msg)
+		msg = "Hello"
+	 }
+	 // pass by value or passing copy 
+	 func writeMessage2(msg string){
+		msg = "Hello"
+		fmt.Println(msg)
+	 }
+	 // pass by reference
+	 func writeMessageByReference(msg *string){
+		fmt.Println(*msg)
+		*msg = "Hello from ptr"
+	 }
+
+	// function with multiple param
+	func multiParam(values ...int){
+		sum := 0
+		for _,v := range values{
+			sum = sum + v
+		}
+		fmt.Printf("Sum of input values %v\n", sum)
+	}
+
+	//================== INTERFACE ==================
+	// Interface declaration 
+	type geometry interface{
+		area() float64
+		perimeter() float64
+	}
+	
+	type Circle struct{
+		radius float64
+	}
+
+	func (rect Rectangle) area() int{
+		return rect.height * rect.width;
+    }
+
+	func (c Circle) area() float64{
+	   return c.radius * c.radius * 3.141
+    }
+
+    func (c Circle) perimeter() float64{
+	return 2 * c.radius * 3.141
+    }
+	
